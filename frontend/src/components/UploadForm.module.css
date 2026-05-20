@@ -1,0 +1,124 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.labelIcon {
+  margin-right: 6px;
+}
+
+/* Drop zone */
+.dropzone {
+  border: 2px dashed var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+.dropzone:hover,
+.dropzone:focus-within {
+  border-color: var(--clr-primary);
+  background: rgba(59, 130, 246, 0.04);
+}
+
+.dragging {
+  border-color: var(--clr-accent);
+  background: rgba(6, 182, 212, 0.06);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+}
+
+.hasFile {
+  border-color: var(--clr-success);
+  border-style: solid;
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropzoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.uploadIcon {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.dropzoneText {
+  color: var(--clr-text-dim);
+  font-size: 0.9rem;
+}
+
+.dropzoneHint {
+  color: var(--clr-text-muted);
+  font-size: 0.78rem;
+}
+
+/* File info */
+.fileInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fileIcon {
+  font-size: 1.2rem;
+}
+
+.fileName {
+  font-weight: 600;
+  color: var(--clr-text);
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.fileSize {
+  color: var(--clr-text-muted);
+  font-size: 0.8rem;
+}
+
+/* Char count */
+.charCount {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  text-align: right;
+}
+
+/* Error banner */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
+  color: #fca5a5;
+  font-size: 0.88rem;
+}
+
+/* Processing note */
+.processingNote {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--clr-text-muted);
+  margin-top: -8px;
+}

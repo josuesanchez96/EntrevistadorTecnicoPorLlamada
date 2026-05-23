@@ -119,7 +119,7 @@ export default function InterviewRoom({ sessionId }: InterviewRoomProps) {
         break;
 
       case "agent_message":
-        if (msg.text) addEntry("entrevistador", msg.text as string);
+        // El texto se añade en tts_start para evitar duplicados
         break;
 
       case "tts_start":

@@ -1,0 +1,35 @@
+# Variables de entorno (¡nunca subir al repo!)
+.env
+
+# Entorno virtual de Python
+venv/
+.venv/
+env/
+
+# Caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de distribución/build
+dist/
+build/
+*.egg-info/
+
+# Archivos de pruebas y cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+
+# FAISS / archivos generados en runtime
+*.faiss
+*.index
+
+# Logs
+*.log

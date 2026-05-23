@@ -21,10 +21,7 @@ ASSEMBLYAI_SPEECH_MODEL = os.environ.get(
 )
 ASSEMBLYAI_STREAMING_LANGUAGE = os.environ.get("ASSEMBLYAI_STREAMING_LANGUAGE", "multi")
 
-CARTESIA_API_KEY = os.environ.get("CARTESIA_API_KEY", "")
-CARTESIA_VOICE_ID = os.environ.get(
-    "CARTESIA_VOICE_ID", "a0e99841-438c-4a64-b679-ae501e7d6091"
-)
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 
 # 50 ms mínimo @ 16 kHz PCM16 mono
 MIN_PCM_CHUNK_BYTES = 1600
@@ -124,30 +121,20 @@ class AssemblyAIStreamingClient:
             yield msg
 
 
-CARTESIA_TTS_URL = "https://api.cartesia.ai/tts/bytes"
+async def synthesize_audio(text: str) -> bytes:
+    if not OPENAI_API_KEY:
+        raise RuntimeError("OPENAI_API_KEY no configurada.")
+    
+    from openai import AsyncOpenAI
+    client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+    
+    response = await client.audio.speech.create(
+        model="tts-1",
+        voice="onyx",
+        input=text,
+        response_format="mp3"
+    )
+    audio_bytes = response.read()
 
-
-async def synthesize_with_cartesia(text: str) -> bytes:
-    if not CARTESIA_API_KEY:
-        raise RuntimeError("CARTESIA_API_KEY no configurada.")
-
-    payload = {
-        "model_id": "sonic-2",
-        "transcript": text,
-        "voice": {"mode": "id", "id": CARTESIA_VOICE_ID},
-        "output_format": {"container": "mp3", "encoding": "mp3", "sample_rate": 44100},
-        "language": "es",
-    }
-    headers = {
-        "X-API-Key": CARTESIA_API_KEY,
-        "Cartesia-Version": "2025-04-16",
-        "Content-Type": "application/json",
-    }
-
-    async with httpx.AsyncClient(timeout=60.0) as client:
-        response = await client.post(CARTESIA_TTS_URL, json=payload, headers=headers)
-        response.raise_for_status()
-        audio_bytes = response.content
-
-    logger.info("Cartesia TTS: %d bytes para '%s...'", len(audio_bytes), text[:40])
+    logger.info("OpenAI TTS: %d bytes para '%s...'", len(audio_bytes), text[:40])
     return audio_bytes

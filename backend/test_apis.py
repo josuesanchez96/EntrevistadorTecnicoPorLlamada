@@ -8,13 +8,15 @@ load_dotenv()
 # Asegurar que el path incluya el directorio actual
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from audio_clients import AssemblyAIStreamingClient, synthesize_with_cartesia
+from audio_clients import AssemblyAIStreamingClient, synthesize_audio
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 async def test_cartesia():
-    print("Testing Cartesia TTS...")
+    print("Testing Cartesia/OpenAI TTS...")
     try:
-        # Generar un audio muy simple de prueba
-        audio_bytes = await synthesize_with_cartesia("Hola, probando conexión.")
+        audio_bytes = await synthesize_audio("Hola, probando conexión.")
         print(f"Cartesia Success: Generated {len(audio_bytes)} bytes of audio.")
         return True
     except Exception as e:

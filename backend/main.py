@@ -22,7 +22,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-from audio_clients import AssemblyAIStreamingClient, synthesize_with_cartesia
+from audio_clients import AssemblyAIStreamingClient, synthesize_audio
 from graph import continuar_entrevista, finalizar_entrevista, iniciar_entrevista
 from rag_engine import build_vector_store
 from session_store import store as session_store
@@ -304,7 +304,7 @@ async def websocket_interview(ws: WebSocket, session_id: str):
                     await _send_json(ws, {"type": "agent_message", "text": texto})
                     await _send_json(ws, {"type": "tts_start", "text": texto})
                     try:
-                        audio = await synthesize_with_cartesia(texto)
+                        audio = await synthesize_audio(texto)
                         await _send_bytes(ws, audio)
                     except Exception as exc:
                         logger.warning("Error TTS: %s", exc)
@@ -332,7 +332,7 @@ async def websocket_interview(ws: WebSocket, session_id: str):
             return True
         await _send_json(ws, {"type": "tts_start", "text": texto})
         try:
-            audio = await synthesize_with_cartesia(texto)
+            audio = await synthesize_audio(texto)
             await _send_bytes(ws, audio)
             logger.info("Saludo TTS enviado (%d bytes).", len(audio))
         except Exception as exc:

@@ -168,7 +168,7 @@ entrevistador-tecnico/
 │   │   └── lib/
 │   │       └── websocket.ts                # Hook de WebSocket + código AudioWorklet
 │   ├── package.json
-│   ├── next.config.ts
+│   ├── next.config.mjs
 │   └── tsconfig.json
 │
 └── README.md
